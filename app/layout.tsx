@@ -5,6 +5,7 @@ import ToastProvider from '@/providers/toast-provider'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import './globals.css'
+import { AuthProvider } from './_providers/Auth'
 
 const poppins = Work_Sans({
   subsets: ['latin'],
@@ -25,11 +26,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
+        <AuthProvider>
         <ToastProvider />
         <ModalProvider />
         <Navbar />
-        {children}
+        <div className='bg-white'>
+          {children}
+        </div>
         <Footer />
+        </AuthProvider>
       </body>
     </html>
   )

@@ -4,11 +4,10 @@ import React, { Fragment, useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 
-import { Button } from '../../../_components/Button'
-import { Input } from '../../../_components/Input'
-import { Message } from '../../../_components/Message'
-
 import classes from './index.module.scss'
+import { Message } from '@/components/ui/Message'
+import { Input } from '@/components/ui/Input'
+import Button from '@/components/ui/button'
 
 type FormData = {
   mobile: string
@@ -26,7 +25,7 @@ export const RecoverPasswordForm: React.FC = () => {
 
   const onSubmit = useCallback(async (data: FormData) => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/forgot-password`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/users/forgot-password`,
       {
         method: 'POST',
         body: JSON.stringify(data),
@@ -64,10 +63,8 @@ export const RecoverPasswordForm: React.FC = () => {
             />
             <Button
               type="submit"
-              appearance="primary"
-              label="Recover Password"
               className={classes.submit}
-            />
+            >Recover password</Button>
           </form>
         </React.Fragment>
       )}

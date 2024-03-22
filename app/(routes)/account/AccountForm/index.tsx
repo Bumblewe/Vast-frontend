@@ -3,13 +3,12 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-
-import { Button } from '../../../_components/Button'
-import { Input } from '../../../_components/Input'
-import { Message } from '../../../_components/Message'
 import { useAuth } from '../../../_providers/Auth'
 
 import classes from './index.module.scss'
+import { Message } from '@/components/ui/Message'
+import { Input } from '@/components/ui/Input'
+import { Button } from '@/components/ui/buttons'
 
 type FormData = {
   email: string
@@ -103,10 +102,15 @@ const AccountForm: React.FC = () => {
             error={errors.email}
             type="email"
           />
-          <Input name="name" label="Name" register={register} error={errors.name} />
+          <Input
+            name="name"
+            label="Name"
+            register={register}
+            error={errors.name}
+          />
 
           <p>
-            {'Change your account details below, or '}
+            {"Change your account details below, or "}
             <button
               type="button"
               className={classes.changePassword}
@@ -114,13 +118,13 @@ const AccountForm: React.FC = () => {
             >
               click here
             </button>
-            {' to change your password.'}
+            {" to change your password."}
           </p>
         </Fragment>
       ) : (
         <Fragment>
           <p>
-            {'Change your password below, or '}
+            {"Change your password below, or "}
             <button
               type="button"
               className={classes.changePassword}
@@ -144,20 +148,26 @@ const AccountForm: React.FC = () => {
             label="Confirm Password"
             required
             register={register}
-            validate={value => value === password.current || 'The passwords do not match'}
+            validate={(value) =>
+              value === password.current || "The passwords do not match"
+            }
             error={errors.passwordConfirm}
           />
         </Fragment>
       )}
       <Button
         type="submit"
-        label={isLoading ? 'Processing' : changePassword ? 'Change Password' : 'Update Account'}
         disabled={isLoading}
-        appearance="primary"
         className={classes.submit}
-      />
+      >
+        {isLoading
+          ? "Processing"
+          : changePassword
+          ? "Change Password"
+          : "Update Account"}
+      </Button>
     </form>
-  )
+  );
 }
 
 export default AccountForm

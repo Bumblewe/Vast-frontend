@@ -4,13 +4,12 @@ import React, { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-
-import { Button } from '../../../_components/Button'
-import { Input } from '../../../_components/Input'
-import { Message } from '../../../_components/Message'
 import { useAuth } from '../../../_providers/Auth'
 
 import classes from './index.module.scss'
+import { Input } from '@/components/ui/Input'
+import Button from '@/components/ui/button'
+import { Message } from '@/components/ui/Message'
 
 type FormData = {
   name: string
@@ -23,7 +22,7 @@ type FormData = {
 
 const CreateAccountForm: React.FC = () => {
   const searchParams = useSearchParams()
-  const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
+  const allParams = searchParams?.toString() ? `?${searchParams.toString()}` : ''
   const { login, newAccountLogin } = useAuth()
   const router = useRouter()
   const [verifyOtp, setVerifyOtp] = useState<boolean>();
@@ -42,11 +41,11 @@ const CreateAccountForm: React.FC = () => {
   const onSubmit = useCallback(
     async (data: FormData) => {
       data.role = "User";
-      const response = await fetch(`http://localhost:2002/api/send-otp/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/send-otp`, {
         method: 'POST',
         body: JSON.stringify({mobile:data.mobile}),
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
       })
       if(response.status == 200){
@@ -58,7 +57,7 @@ const CreateAccountForm: React.FC = () => {
 
   const onSubmitOtp = useCallback(
     async (data: FormData) => {
-      const resp = await fetch(`http://localhost:2002/api/verify-otp/`, {
+      const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify-otp`, {
         method: 'POST',
         body: JSON.stringify({ mobile: data.mobile, otp: data.otp }),
         headers: {
@@ -75,7 +74,7 @@ const CreateAccountForm: React.FC = () => {
         let token = await resp.json()
         token = token?.data?.token;
         data.role = "User";
-        const response = await fetch(`http://localhost:2003/api/user/profile`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
           method: 'PATCH',
           body: JSON.stringify(data),
           headers: {
@@ -89,7 +88,7 @@ const CreateAccountForm: React.FC = () => {
           return
         }
 
-        const redirect = searchParams.get('redirect')
+        const redirect = searchParams?.get('redirect')
 
         try {
           let res = await response.json();
@@ -119,10 +118,8 @@ const CreateAccountForm: React.FC = () => {
           />
           <Button
             type="submit"
-            label={"Submit OTP"}
-            appearance="primary"
             className={classes.submit}
-          />
+          >Submit</Button>
         </form>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -161,10 +158,8 @@ const CreateAccountForm: React.FC = () => {
           />
           <Button
             type="submit"
-            label={'Sign up'}
-            appearance="primary"
             className={classes.submit}
-          />
+          >Sign up</Button>
           <div>
             {'Already have an account? '}
             <Link href={`/login${allParams}`}>Login</Link>

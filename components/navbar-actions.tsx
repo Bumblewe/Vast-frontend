@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import Button from "@/components/ui/button";
 import useCart from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/app/_providers/Auth";
 
 const NavbarActions = (props:any) => {
   const [isMounted, setIsMounted] = useState(false);
+  const { user } = useAuth()
 
   useEffect(() => {
     setIsMounted(true);
@@ -41,7 +43,7 @@ const NavbarActions = (props:any) => {
         className={cn("flex items-center md:shrink-1 gap-x-4", props?.className)}
       >
         <Button
-          onClick={() => router.push("/cart")}
+          onClick={() => user?router.push("/account"):router.push("/login")}
           className="flex items-center rounded-full bg-white px-4 py-2"
         >
           <UserIcon size={20} color="black" />

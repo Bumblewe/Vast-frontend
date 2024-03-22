@@ -4,13 +4,11 @@ import React, { useCallback, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-
-import { Button } from '../../../_components/Button'
-import { Input } from '../../../_components/Input'
-import { Message } from '../../../_components/Message'
-import { useAuth } from '../../../_providers/Auth'
-
 import classes from './index.module.scss'
+import { useAuth } from '@/app/_providers/Auth'
+import { Input } from '@/components/ui/Input'
+import { Message } from '@/components/ui/Message'
+import Button from '@/components/ui/button'
 
 type FormData = {
   email: string
@@ -19,8 +17,8 @@ type FormData = {
 
 const LoginForm: React.FC = () => {
   const searchParams = useSearchParams()
-  const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
-  const redirect = useRef(searchParams.get('redirect'))
+  const allParams = searchParams?.toString() ? `?${searchParams.toString()}` : ''
+  const redirect = useRef(searchParams?.get('redirect'))
   const router = useRouter();
   const { login } = useAuth()
   const [error, setError] = React.useState<string | null>(null)
@@ -32,8 +30,8 @@ const LoginForm: React.FC = () => {
   } = useForm<FormData>()
 
   const onSubmit = useCallback(
-    async (data) => {
-      const response = await fetch(`http://localhost:2002/api/login`, {
+    async (data:any) => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/create`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -80,11 +78,9 @@ const LoginForm: React.FC = () => {
       />
       <Button
         type="submit"
-        appearance="primary"
-        label={isLoading ? 'Processing' : 'Login'}
         disabled={isLoading}
         className={classes.submit}
-      />
+      >Submit</Button>
       <div className={classes.links}>
         <Link href={`/create-account${allParams}`}>Create an account</Link>
         <br />
