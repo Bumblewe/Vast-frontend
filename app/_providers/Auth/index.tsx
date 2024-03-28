@@ -89,16 +89,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const login = (response:any) => {
-    setUser(response.data.user)
-    sessionStorage.setItem("token",response?.data?.token);
+    setUser(response?.user)
+    sessionStorage.setItem("token",response?.token);
     setStatus('loggedIn')
-    return response.data.user;
+    return response?.user;
   }
 
   const newAccountLogin = (response:any) => {
-    setUser(response.data)
+    setUser(response)
     setStatus('loggedIn')
-    return response.data;
+    return response;
   }
 
   const logout = useCallback<Logout>(async () => {

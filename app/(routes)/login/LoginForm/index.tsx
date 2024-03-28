@@ -31,7 +31,7 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = useCallback(
     async (data:any) => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/create`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

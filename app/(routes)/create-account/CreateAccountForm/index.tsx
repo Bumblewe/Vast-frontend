@@ -17,7 +17,7 @@ type FormData = {
   password: string
   mobile: string
   role: string
-  otp: string
+  otp?: string
 }
 
 const CreateAccountForm: React.FC = () => {
@@ -41,7 +41,7 @@ const CreateAccountForm: React.FC = () => {
   const onSubmit = useCallback(
     async (data: FormData) => {
       data.role = "User";
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/send-otp`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sent-otp`, {
         method: 'POST',
         body: JSON.stringify({mobile:data.mobile}),
         headers: {
@@ -59,11 +59,12 @@ const CreateAccountForm: React.FC = () => {
     async (data: FormData) => {
       const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify-otp`, {
         method: 'POST',
-        body: JSON.stringify({ mobile: data.mobile, otp: data.otp }),
+        body: JSON.stringify({ mobile: data.mobile, otp: data.otp, data:data, new_user:true }),
         headers: {
           'Content-Type': 'application/json',
         },
       })
+debugger      
       if (!resp.ok) {
         const message = 'Invalid OTP.'
           setError(message)
@@ -71,29 +72,12 @@ const CreateAccountForm: React.FC = () => {
       }
       if (resp.ok) {
         delete data.otp
-        let token = await resp.json()
-        token = token?.data?.token;
-        data.role = "User";
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
-          method: 'PATCH',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ${token}`
-          },
-        })
-        if (!response.ok) {
-          const message = response.statusText || 'There was an error creating the account.'
-          setError(message)
-          return
-        }
-
+        let res = await resp.json()
+        let token = res?.token;
         const redirect = searchParams?.get('redirect')
-
         try {
-          let res = await response.json();
-          sessionStorage.setItem("token",res?.data?.token);
-          newAccountLogin(res)
+          sessionStorage.setItem("token",token);
+          newAccountLogin(res?.user)
           if (redirect) router.push(redirect as string)
           else router.push(`/`)
         } catch (_) {

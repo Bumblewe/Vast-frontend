@@ -12,6 +12,8 @@ import { useAuth } from "@/app/_providers/Auth";
 const NavbarActions = (props:any) => {
   const [isMounted, setIsMounted] = useState(false);
   const { user } = useAuth()
+  console.log(user);
+  
 
   useEffect(() => {
     setIsMounted(true);

@@ -8,7 +8,7 @@ import { useAuth } from '../../../_providers/Auth'
 import classes from './index.module.scss'
 import { Message } from '@/components/ui/Message'
 import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/buttons'
+import Button from '@/components/ui/button'
 
 type FormData = {
   email: string
@@ -39,7 +39,7 @@ const AccountForm: React.FC = () => {
   const onSubmit = useCallback(
     async (data: FormData) => {
       if (user) {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user}`, {
           // Make sure to include cookies with fetch
           credentials: 'include',
           method: 'PATCH',
@@ -155,11 +155,8 @@ const AccountForm: React.FC = () => {
           />
         </Fragment>
       )}
-      <Button
-        type="submit"
-        disabled={isLoading}
-        className={classes.submit}
-      >
+      <Button type="submit" disabled={isLoading} className={classes.submit}>
+        {" "}
         {isLoading
           ? "Processing"
           : changePassword
