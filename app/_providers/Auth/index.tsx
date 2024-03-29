@@ -103,7 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = useCallback<Logout>(async () => {
     try {
-      sessionStorage.setItem("token",'');
+        sessionStorage.setItem("token",'');
         setUser(null)
         setStatus('loggedOut')
     } catch (e) {
@@ -114,25 +114,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const fetchMe = async () => {
       if (sessionStorage.getItem('token') != '') {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/profile`, {
-          method: 'GET',
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
           },
         })
 
         if (res.ok) {
-          let user = await res.json()
-          user = user?.data
+          let data = await res.json()
+          let user = data.user
           setUser(user || null)
           setStatus(user ? 'loggedIn' : undefined)
         } else {
-          throw new Error('An error occurred while fetching your account.')
+          console.log('An error occurred while fetching your account.')
         }
       }
     }
-    // fetchMe()
+    fetchMe()
   }, [])
 
   const forgotPassword = useCallback<ForgotPassword>(async args => {

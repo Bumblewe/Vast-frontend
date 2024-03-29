@@ -11,9 +11,7 @@ import { useAuth } from "@/app/_providers/Auth";
 
 const NavbarActions = (props:any) => {
   const [isMounted, setIsMounted] = useState(false);
-  const { user } = useAuth()
-  console.log(user);
-  
+  const { status } = useAuth()  
 
   useEffect(() => {
     setIsMounted(true);
@@ -37,7 +35,7 @@ const NavbarActions = (props:any) => {
         >
           <ShoppingBag size={20} color="black" />
           <span className="ml-2 text-sm font-semibold text-lg text-black">
-            <span className="md:hidden">Cart </span>({cart.items.length})
+            <span className="md:hidden">Cart </span>({cart?.items.length})
           </span>
         </Button>
       </div>
@@ -45,7 +43,7 @@ const NavbarActions = (props:any) => {
         className={cn("flex items-center md:shrink-1 gap-x-4", props?.className)}
       >
         <Button
-          onClick={() => user?router.push("/account"):router.push("/login")}
+          onClick={() => status == "loggedIn"?router.push("/account"):router.push("/login")}
           className="flex items-center rounded-full bg-white px-4 py-2"
         >
           <UserIcon size={20} color="black" />

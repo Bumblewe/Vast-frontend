@@ -1,13 +1,8 @@
 import getBanners from "@/actions/get-banners";
-import getBillboard from "@/actions/get-billboard";
 import getProducts from "@/actions/get-products";
 import ProductList from "@/components/product-list";
 import Banners from "@/components/ui/banners";
-import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
-import { Banner } from "@/types";
-
-export const revalidate = 0;
 
 const HomePage = async () => {
   const products = await getProducts({ isFeatured: true });

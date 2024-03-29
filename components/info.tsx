@@ -14,7 +14,23 @@ interface InfoProps {
 const Info: React.FC<InfoProps> = ({ data }) => {
   const cart = useCart();
 
-  const onAddToCart = () => {
+  const onAddToCart = async () => {
+    // let details = {
+    //   id: data.id,
+    //   colorId: data.colorId,
+    //   sizeId: data.sizeId,
+    //   quantity:"1"
+    // }
+    // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({data:details}),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+    //   },
+    // })
+    // console.log(res.json());
+    
     cart.addItem(data);
   }
 

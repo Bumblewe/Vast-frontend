@@ -4,9 +4,11 @@ export interface Product {
   name: string;
   price: string;
   isFeatured: boolean;
+  sizeId: string;
+  colorId: string;
   size: Size;
   color: Color;
-  images: Image[]
+  images: Image[];
 };
 
 export interface Image {

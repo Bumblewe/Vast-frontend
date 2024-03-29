@@ -9,6 +9,7 @@ import classes from './index.module.scss'
 import { Message } from '@/components/ui/Message'
 import { Input } from '@/components/ui/Input'
 import Button from '@/components/ui/button'
+import Loading from '../../loading'
 
 type FormData = {
   email: string
@@ -22,7 +23,7 @@ const AccountForm: React.FC = () => {
   const [success, setSuccess] = useState('')
   const { user, setUser } = useAuth()
   const [changePassword, setChangePassword] = useState(false)
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -34,7 +35,6 @@ const AccountForm: React.FC = () => {
   const password = useRef({})
   password.current = watch('password', '')
 
-  const router = useRouter()
 
   const onSubmit = useCallback(
     async (data: FormData) => {

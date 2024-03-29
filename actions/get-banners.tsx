@@ -9,3 +9,4 @@ const getBanners = async (): Promise<Banner[]> => {
 };
 
 export default getBanners;
+
