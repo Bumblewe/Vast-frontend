@@ -6,7 +6,6 @@ const MakePaymentComponent = () => {
     const makePayment = async () => {
         //console.log("here...");
         const res = await initializeRazorpay();
-        console.log(res);
         if (!res) {
           alert("Razorpay SDK Failed to load");
           return;
