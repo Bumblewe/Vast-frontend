@@ -11,6 +11,7 @@ export interface User {
   cart?: {
     items?: CartItems;
   };
+  address: string,
   updatedAt: string;
   createdAt: string;
   email: string;

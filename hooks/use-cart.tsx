@@ -66,7 +66,7 @@ const useCart = create(
       changeCount: async (data:any,step:string) => {
         data.step = step;
         let res: any = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/cart/${data?.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/cart`,
           {
             method: "PATCH",
             body: JSON.stringify({ data: data }),  
@@ -74,7 +74,7 @@ const useCart = create(
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
-        );
+        );        
         res = await res.json();
         set({ items: res?.cart?.cartItem || [] });
       },

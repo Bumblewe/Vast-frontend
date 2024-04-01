@@ -11,6 +11,13 @@ export interface Product {
   images: Image[];
 };
 
+export interface Address {
+  line1: string,
+  pincode: string,
+  city: string,
+  state: string
+}
+
 export interface Image {
   id: string;
   url: string;

@@ -1,19 +1,23 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import { toast } from "react-hot-toast";
 import Payment from "@/components/payment";
-import { AnyTxtRecord } from "dns";
+import Button from "@/components/ui/button";
+import useAddressModal from "@/hooks/use-address-modal";
+import { useAuth } from "@/app/_providers/Auth";
 
 const Summary = () => {
   const searchParams = useSearchParams();
   const cart = useCart();
   const removeAll = useCart((state) => state.removeAll);
+  const addressModal = useAddressModal();
+  const { user } = useAuth()
 
   useEffect(() => {
     if (searchParams?.get('success')) {
@@ -29,6 +33,22 @@ const Summary = () => {
   const totalPrice = cart.items.reduce((total, item:any) => {    
     return total + Number(item?.product?.price*item?.quantity)
   }, 0);  
+
+  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    let addressObject= addressModal?.data;
+    let savedAddress =
+      addressObject?.line1 &&
+      `${addressObject?.line1},${addressObject?.city},${addressObject?.state},${addressObject?.pincode}`;
+    let address:any =  (savedAddress || user?.address || ",,,").split(",");
+    addressModal.onOpen({
+      line1: address[0].replaceAll("_",","),
+      pincode: address[3],
+      city: address[1],
+      state: address[2]
+    });
+    
+  };
  
   return (
     <>
@@ -42,7 +62,16 @@ const Summary = () => {
             <Currency value={totalPrice} />
           </div>
         </div>
-       <Payment />
+        <div>
+          {Object.values(addressModal.data || {}).join() == "" ||
+          Object.values(addressModal.data || {}).join() == ",,," ? (
+            <Button onClick={onPreview} className="w-full mt-6">
+              Add Address
+            </Button>
+          ) : (
+            <Payment />
+          )}
+        </div>
       </div>
     </>
   );

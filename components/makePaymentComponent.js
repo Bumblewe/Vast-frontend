@@ -72,7 +72,7 @@ const MakePaymentComponent = () => {
           onClick={()=>makePayment()}
           className="w-full mt-6"
         >
-          Checkout
+          Pay now
         </Button>
     </div>
   )
