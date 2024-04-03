@@ -30,7 +30,7 @@ const NavbarActions = (props:any) => {
         className={cn("flex items-center gap-x-4 md:shrink-1", props?.className)}
       >
         <Button
-          onClick={() => router.push("/cart")}
+          onClick={() => status == "loggedIn"? router.push("/cart"):router.push("/login")}
           className="flex items-center rounded-full bg-white px-4 py-2"
         >
           <ShoppingBag size={20} color="black" />

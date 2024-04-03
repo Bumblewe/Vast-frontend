@@ -39,7 +39,7 @@ const MainNav: React.FC<MainNavProps> = ({
   
   return (
     <nav>
-      <div className="wrapper">
+      <div className="wrapper shadow-sm">
         <Link href="/" className="flex lg:ml-0 gap-x-2">
           <img src="/logo-black.png" width={250} height={70} />
         </Link>

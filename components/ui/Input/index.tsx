@@ -25,7 +25,7 @@ export const Input: React.FC<Props> = ({
   disabled,
 }) => {
   return (
-    <div className={classes.inputWrap}>
+    <div className={[classes.inputWrap, "pb-3"].filter(Boolean).join(' ')}>
       <label htmlFor="name" className={classes.label}>
         {label}
         {required ? <span className={classes.asterisk}>&nbsp;*</span> : ''}

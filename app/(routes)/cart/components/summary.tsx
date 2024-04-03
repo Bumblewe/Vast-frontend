@@ -17,39 +17,38 @@ const Summary = () => {
   const cart = useCart();
   const removeAll = useCart((state) => state.removeAll);
   const addressModal = useAddressModal();
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (searchParams?.get('success')) {
-      toast.success('Payment completed.');
+    if (searchParams?.get("success")) {
+      toast.success("Payment completed.");
       removeAll();
     }
 
-    if (searchParams?.get('canceled')) {
-      toast.error('Something went wrong.');
+    if (searchParams?.get("canceled")) {
+      toast.error("Something went wrong.");
     }
   }, [searchParams, removeAll]);
 
-  const totalPrice = cart.items.reduce((total, item:any) => {    
-    return total + Number(item?.product?.price*item?.quantity)
-  }, 0);  
+  const totalPrice = cart.items.reduce((total, item: any) => {
+    return total + Number(item?.product?.price * item?.quantity);
+  }, 0);
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
-    let addressObject= addressModal?.data;
+    let addressObject = addressModal?.data;
     let savedAddress =
       addressObject?.line1 &&
       `${addressObject?.line1},${addressObject?.city},${addressObject?.state},${addressObject?.pincode}`;
-    let address:any =  (savedAddress || user?.address || ",,,").split(",");
+    let address: any = (savedAddress || user?.address || ",,,").split(",");
     addressModal.onOpen({
-      line1: address[0].replaceAll("_",","),
+      line1: address[0].replaceAll("_", ","),
       pincode: address[3],
       city: address[1],
-      state: address[2]
+      state: address[2],
     });
-    
   };
- 
+
   return (
     <>
       <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -69,12 +68,15 @@ const Summary = () => {
               Add Address
             </Button>
           ) : (
-            <Payment />
+            <>
+              <div className="pt-2"><div className="font-medium text-gray-900">Ship to:</div>{addressModal?.data?.line1},{addressModal?.data?.city},{addressModal?.data?.state}<br/> Pincode - {addressModal?.data?.pincode}</div>
+              <Payment />
+            </>
           )}
         </div>
       </div>
     </>
   );
-}
- 
+};
+
 export default Summary;

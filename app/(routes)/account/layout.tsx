@@ -19,8 +19,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   },[])
   return (<>
     {status== "loggedIn"?<Container className="nav-padding wrapper">
-      <Gutter>
-        <h3>My Profile</h3>
+      <Gutter className='py-2'>
+        <h3 className='ps-6'>My Profile</h3>
         <div className={classes.account}>
           <div className={classes.nav}>
             <UserInfo />

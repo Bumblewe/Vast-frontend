@@ -6,12 +6,14 @@ import Currency  from "@/components/ui/currency";
 import Button from "@/components/ui/button";
 import { Product } from "@/types";
 import useCart from "@/hooks/use-cart";
+import { useAuth } from "@/app/_providers/Auth";
 
 interface InfoProps {
   data: Product
 };
 
 const Info: React.FC<InfoProps> = ({ data }) => {
+  const { status } = useAuth()  
   const cart = useCart();
 
   const onAddToCart = async () => {
@@ -56,10 +58,10 @@ const Info: React.FC<InfoProps> = ({ data }) => {
         </div>
       </div>
       <div className="mt-10 flex items-center gap-x-3">
-        <Button onClick={onAddToCart} className="flex items-center gap-x-2">
+       {status == "loggedIn" && <Button onClick={onAddToCart} className="flex items-center gap-x-2">
           Add To Cart
           <ShoppingCart size={20} />
-        </Button>
+        </Button>}
       </div>
     </div>
   );

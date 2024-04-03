@@ -10,6 +10,7 @@ import IconButton  from "@/components/ui/icon-button";
 import usePreviewModal from "@/hooks/use-preview-modal";
 import useCart from "@/hooks/use-cart";
 import { Product } from "@/types";
+import { useAuth } from "@/app/_providers/Auth";
 
 interface ProductCard {
   data: Product
@@ -21,6 +22,7 @@ const ProductCard: React.FC<ProductCard> = ({
   const previewModal = usePreviewModal();
   const cart = useCart();
   const router = useRouter();
+  const { status } = useAuth()  
 
   const handleClick = () => {
     router.push(`/product/${data?.id}`);
@@ -54,10 +56,10 @@ const ProductCard: React.FC<ProductCard> = ({
               onClick={onPreview} 
               icon={<Expand size={20} className="text-gray-600" />}
             />
-            <IconButton
+            {status == "loggedIn" && <IconButton
               onClick={onAddToCart} 
               icon={<ShoppingCart size={20} className="text-gray-600" />} 
-            />
+            />}
           </div>
         </div>
       </div>

@@ -109,7 +109,7 @@ const AccountForm: React.FC = () => {
             error={errors.name}
           />
 
-          <p>
+          <p className='pb-3'>
             {"Change your account details below, or "}
             <button
               type="button"
