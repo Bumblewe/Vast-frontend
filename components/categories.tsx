@@ -38,7 +38,7 @@ const Categories: React.FC<NavbarProps> = ({
 
   let navTree: any = {};
 
-  parents.forEach((parent) => {
+  parents.forEach((parent:any) => {
    navTree[parent.type] = navTree[parent.type] || [];
    navTree[parent.type].push({
       name: parent.name,

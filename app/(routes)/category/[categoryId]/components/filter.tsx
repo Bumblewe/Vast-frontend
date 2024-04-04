@@ -1,5 +1,5 @@
 "use client";
-
+//@ts-ignore
 import qs from "query-string";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -21,17 +21,17 @@ const Filter: React.FC<FilterProps> = ({
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const selectedValue = searchParams.get(valueKey);
+  const selectedValue = searchParams?.get(valueKey);
   
   const onClick = (id: string) => {
-    const current = qs.parse(searchParams.toString());
+    const current = searchParams && qs.parse(searchParams.toString());
 
     const query = {
       ...current,
       [valueKey]: id
     };
 
-    if (current[valueKey] === id) {
+    if ((current && current[valueKey]) === id) {
       query[valueKey] = null;
     }
 

@@ -46,10 +46,10 @@ export const RecoverPasswordForm: React.FC = () => {
   }, [])
 
   return (
-    <Fragment>
+    <>
       {!success && (
-        <React.Fragment>
-          <p>Enter your registered mobile no. We'll send you a code to reset your password.</p>
+        <>
+          <p>Enter your registered mobile no. We will send you a code to reset your password.</p>
 
           <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
             <Message error={error} className={classes.message} />
@@ -66,14 +66,14 @@ export const RecoverPasswordForm: React.FC = () => {
               className={classes.submit}
             >Recover password</Button>
           </form>
-        </React.Fragment>
+        </>
       )}
       {success && (
-        <React.Fragment>
+        <>
           <h1>Request submitted</h1>
           <p>Check your email for a link that will allow you to securely reset your password.</p>
-        </React.Fragment>
+        </>
       )}
-    </Fragment>
+    </>
   )
 }

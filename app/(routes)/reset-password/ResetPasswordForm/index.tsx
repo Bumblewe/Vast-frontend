@@ -4,12 +4,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import { Button } from '../../../_components/Button'
-import { Input } from '../../../_components/Input'
-import { Message } from '../../../_components/Message'
 import { useAuth } from '../../../_providers/Auth'
 
 import classes from './index.module.scss'
+import { Message } from '@/components/ui/Message'
+import { Input } from '@/components/ui/Input'
+import Button from '@/components/ui/button'
 
 type FormData = {
   password: string
@@ -21,7 +21,7 @@ export const ResetPasswordForm: React.FC = () => {
   const { login } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const token = searchParams.get('token')
+  // const token = searchParams.get('token')
 
   const {
     register,
@@ -47,7 +47,7 @@ export const ResetPasswordForm: React.FC = () => {
         const json = await response.json()
 
         // Automatically log the user in after they successfully reset password
-        await login({ email: json.user.email, password: data.password })
+        // await login({ email: json.user.email, password: data.password })
 
         // Redirect them to `/account` with success message in URL
         router.push('/account?success=Password reset successfully.')
@@ -60,9 +60,9 @@ export const ResetPasswordForm: React.FC = () => {
 
   // when Next.js populates token within router,
   // reset form with new token value
-  useEffect(() => {
-    reset({ token: token || undefined })
-  }, [reset, token])
+  // useEffect(() => {
+  //   reset({ token: token || undefined })
+  // }, [reset, token])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -78,10 +78,8 @@ export const ResetPasswordForm: React.FC = () => {
       <input type="hidden" {...register('token')} />
       <Button
         type="submit"
-        appearance="primary"
-        label="Reset Password"
         className={classes.submit}
-      />
+      >Reset Password</Button>
     </form>
   )
 }
