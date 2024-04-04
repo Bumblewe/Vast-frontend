@@ -1,7 +1,7 @@
 //pages->payment.js
 
 import React from 'react'
-import MakePaymentComponent from './MakePaymentComponent'
+import MakePaymentComponent from './makePaymentComponent'
 
 const payment = () => {
 

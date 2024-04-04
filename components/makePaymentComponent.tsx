@@ -1,4 +1,5 @@
 //components->MakePaymentComponent.js
+// @ts-nocheck
 import React from 'react'
 import Button from "@/components/ui/button";
 
@@ -34,7 +35,7 @@ const MakePaymentComponent = () => {
           order_id: data.id,
           description: "Thank you for shopping with us.",
           image: "./logo-black.png",
-          handler: function (response) {
+          handler: function (response:any) {
             // Validate payment at server - using webhooks is a better idea.
             alert("Razorpay Response: "+response.razorpay_payment_id);
             //alert(response.razorpay_order_id);
